@@ -29,7 +29,7 @@ public class GUI {
 	private JTextArea weak;
 	private JTextArea oppo;
 	private JTextArea threat;
-	private JTextArea desc;
+	private JTextField desc;
 	private JTextField value;
 	private JButton add;
 	private JButton go;
@@ -123,8 +123,8 @@ public class GUI {
 				
 		dim(.17,.78,.81,.11);
 		
-		desc = createTextArea(x, y, w, h);
-		desc.setEditable(true);
+		desc = new JTextField();
+		desc.setBounds(x, y, w, h);
 		desc.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
@@ -138,7 +138,7 @@ public class GUI {
 			@Override
 			public void keyTyped(KeyEvent arg0) {}
 		});
-		frame.add(addScroll(desc, x, y, w, h));
+		frame.add(desc);
 		
 		dim(.02,.78,.09,.05);
 		
