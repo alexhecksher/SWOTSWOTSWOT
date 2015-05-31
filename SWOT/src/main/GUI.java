@@ -205,7 +205,7 @@ public class GUI {
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
         text.setEditable(false);
-        text.setFont(new Font("Verdana", Font.PLAIN, 28));
+        text.setFont(new Font("Verdana", Font.PLAIN, 22));
         //text.setForeground(Color.ORANGE);
 		
         return text;
