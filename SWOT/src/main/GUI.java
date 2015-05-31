@@ -24,18 +24,10 @@ public class GUI {
 	private JLabel wLabel;
 	private JLabel oLabel;
 	private JLabel tLabel;
-	private JTextArea stren;
-	private JTextArea weak;
-	private JTextArea oper;
-	private JTextArea threat;
 	private JTextArea desc;
 	private JButton add;
 	private JButton go;
 	private JComboBox swot;
-	private JScrollPane scrollS;
-	private JScrollPane scrollW;
-	private JScrollPane scrollO;
-	private JScrollPane scrollT;
 
 	/**
 	 * Launch the application.
@@ -89,40 +81,32 @@ public class GUI {
 		w = (int)(width * .45);
 		h = (int)(height * .3);
 		
-		stren = new JTextArea();
-		stren.setBackground(Color.CYAN);
-		scrollS = new JScrollPane(stren);
-		scrollS.setBounds(x, y, w, h);
-		frame.add(scrollS);
+		frame.add(createTextArea(x, y, w, h));
 		
 		x = (int)(width * .49);
 		
-		weak = new JTextArea();
-		weak.setBounds(x, y, w, h);
-		weak.setBackground(Color.CYAN);
-		scrollW = new JScrollPane(weak);
-		scrollW.setBounds(x, y, w, h);
-		frame.add(scrollW);
+		frame.add(createTextArea(x, y, w, h));
 		
 		x = (int)(width * .02);
 		y = (int)(height * .45);
 		
-		oper = new JTextArea();
-		oper.setBounds(x, y, w, h);
-		oper.setBackground(Color.CYAN);
-		scrollO = new JScrollPane(oper);
-		scrollO.setBounds(x, y, w, h);
-		frame.add(scrollO);
+		frame.add(createTextArea(x, y, w, h));
 		
 		x = (int)(width * .49);
 		
-		threat = new JTextArea();
-		threat.setBounds(x, y, w, h);
-		threat.setBackground(Color.CYAN);
-		scrollT = new JScrollPane(threat);
-		scrollT.setBounds(x, y, w, h);
-		frame.add(scrollT);
+		frame.add(createTextArea(x, y, w, h));
 			
+	}
+	
+	public JScrollPane createTextArea(int x, int y, int w, int h) {
+		JTextArea text = new JTextArea();
+		text.setBackground(Color.CYAN);
+		text.setLineWrap(true);
+        text.setWrapStyleWord(true);
+		JScrollPane scroll = new JScrollPane(text);
+		scroll.setBounds(x, y, w, h);
+		
+		return scroll;
 	}
 	
 	public int fontSize(Component comp, String text) {
