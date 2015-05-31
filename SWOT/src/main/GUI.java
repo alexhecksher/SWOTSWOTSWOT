@@ -250,7 +250,7 @@ public class GUI {
         for(int i = 0; i < str.length(); i++)
         {
         	char temp = str.charAt(i);
-        	if(Character.isLetter(temp)) return -1;
+        	if(!Character.isDigit(temp)) return -1;
             num = num + (temp - 48);
             num *= 10;
         }
@@ -269,12 +269,10 @@ public class GUI {
     	descStr.replaceAll("\n", "");
     	descStr=descStr.trim();
     	int val = toNum(value.getText());
-    	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val != -1) {
+    	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val > -1) {
         	String swotVal = (String)swot.getSelectedItem();
         	Idea tempIdea = new Idea(swotVal, descStr, val);
         	ideas.add(tempIdea);
-        	desc.setText("");
-        	value.setText("");
         	descStr+="\n";
         	if(swotVal.equals("S")) {
         		stre.setText(stre.getText() + descStr);
@@ -289,8 +287,9 @@ public class GUI {
         		threat.setText(threat.getText() + descStr);
         	}
     	}
+    	desc.setText("");
+    	value.setText("");
     	swot.requestFocus();
-		desc.setText("");
 	}
 	
 
