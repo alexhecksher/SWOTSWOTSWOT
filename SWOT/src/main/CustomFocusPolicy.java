@@ -16,11 +16,8 @@ public class CustomFocusPolicy extends FocusTraversalPolicy {
 	@Override
 	public Component getComponentAfter(Container aContainer,
 			Component aComponent) {
-		int index = components.indexOf(aComponent);
-		index+=2;
-		if (index>=components.size())
-			if (index%2==0) index = 1;
-			else index=0;
+		int index = 0;
+		if (index<components.size()-1) index = components.indexOf(aComponent)+1;
 		return components.get(index);
 	}
 

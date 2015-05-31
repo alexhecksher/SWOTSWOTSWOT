@@ -38,6 +38,8 @@ public class GUI {
 	private int x,y,w,h;
 	private ArrayList<Idea> ideas = new ArrayList<Idea>();
 	
+	CustomFocusPolicy cfp;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -127,6 +129,9 @@ public class GUI {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
 					addAction();
+				if (e.getKeyCode() == KeyEvent.VK_TAB) {
+					swot.requestFocus();
+				}
 			}
 			@Override
 			public void keyReleased(KeyEvent arg0) {}
@@ -188,7 +193,8 @@ public class GUI {
         order.add(swot);
         order.add(value);
         order.add(desc);
-        frame.setFocusTraversalPolicy(new CustomFocusPolicy(order));
+        cfp = new CustomFocusPolicy(order);
+        frame.setFocusTraversalPolicy(cfp);
         
 	}
 	
@@ -281,6 +287,8 @@ public class GUI {
         		threat.setText(threat.getText() + descStr);
         	}
     	}
+    	swot.requestFocus();
+		desc.setText("");
     }
 	
 
