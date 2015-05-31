@@ -123,6 +123,16 @@ public class GUI {
 		
 		desc = createTextArea(x, y, w, h);
 		desc.setEditable(true);
+		desc.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					addAction();
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {}
+			@Override
+			public void keyTyped(KeyEvent arg0) {}
+		});
 		frame.add(addScroll(desc, x, y, w, h));
 		
 		dim(.84,.78,.09,.05);
@@ -145,16 +155,6 @@ public class GUI {
 		value.setBounds(x, y, w, h);
 		value.setHorizontalAlignment(JTextField.CENTER);
 		value.setFont(new Font(value.getName(), Font.PLAIN, fontSize(value, value.getText())));
-		value.addKeyListener(new KeyListener() {
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					addAction();
-			}
-			@Override
-			public void keyReleased(KeyEvent arg0) {}
-			@Override
-			public void keyTyped(KeyEvent arg0) {}
-		});
 		frame.add(value);
 		
 		dim(.02, .93, .18, .05);
@@ -186,8 +186,9 @@ public class GUI {
         
         Vector<Component> order = new Vector<Component>(3);
         order.add(swot);
+        order.add(value);
         order.add(desc);
-        order.add(value);//        frame.setFocusTraversalPolicy(policy);
+        frame.setFocusTraversalPolicy(new CustomFocusPolicy(order));
         
 	}
 	
