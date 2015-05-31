@@ -27,7 +27,9 @@ public class GUI {
 	private JButton add;
 	private JButton go;
 	private JComboBox swot;
-
+	
+	Font font = new Font("Verdana", Font.PLAIN, 13);
+	
 	/**
 	 * Launch the application.
 	 */
@@ -96,6 +98,11 @@ public class GUI {
 		
 		threat = createTextArea(x, y, w, h);
 		frame.add(addScroll(threat, x, y, w, h));
+		
+		stre.setFont(font);
+		oper.setFont(font);
+		weak.setFont(font);
+		threat.setFont(font);
 		
 	}
 	
