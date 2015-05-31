@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author Alex
+ * @author Spencer
  *
  */
 package main;
