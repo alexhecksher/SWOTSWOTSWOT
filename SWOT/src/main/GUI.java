@@ -266,6 +266,8 @@ public class GUI {
 	
 	public void addAction() {
     	String descStr = desc.getText();
+    	descStr.replaceAll("\n", "");
+    	descStr=descStr.trim();
     	int val = toNum(value.getText());
     	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val != -1) {
         	String swotVal = (String)swot.getSelectedItem();
@@ -273,7 +275,7 @@ public class GUI {
         	ideas.add(tempIdea);
         	desc.setText("");
         	value.setText("");
-        	descStr += "\t\t";
+        	descStr+="\n";
         	if(swotVal.equals("S")) {
         		stre.setText(stre.getText() + descStr);
         	}
@@ -289,7 +291,7 @@ public class GUI {
     	}
     	swot.requestFocus();
 		desc.setText("");
-    }
+	}
 	
 
 }
