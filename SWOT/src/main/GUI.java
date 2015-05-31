@@ -113,13 +113,13 @@ public class GUI {
 		
 		frame.add(createLabel("Threats", x, y, w, h));
 		
-		dim(.02,.74,.81,.04);
+		dim(.17,.74,.81,.04);
 		
 		JLabel descLb = createLabel("Description", x, y, w, h);
 		descLb.setHorizontalAlignment(JLabel.LEFT);
 		frame.add(descLb);
 				
-		dim(.02,.78,.81,.11);
+		dim(.17,.78,.81,.11);
 		
 		desc = createTextArea(x, y, w, h);
 		desc.setEditable(true);
@@ -135,7 +135,7 @@ public class GUI {
 		});
 		frame.add(addScroll(desc, x, y, w, h));
 		
-		dim(.84,.78,.09,.05);
+		dim(.02,.78,.09,.05);
 		
 		swot = new JComboBox<String>();
 		swot.setBounds(x, y, w, h);
@@ -145,11 +145,11 @@ public class GUI {
 		swot.addItem("T");
 		frame.add(swot);
 		
-		dim(.84,.84,.09,.05);
+		dim(.02,.84,.09,.05);
 		
 		frame.add(createLabel("Value", x, y, w, h));
 		
-		dim(.93,.84,.05,.05);
+		dim(.11,.84,.05,.05);
 		
 		value = new JTextField();
 		value.setBounds(x, y, w, h);
