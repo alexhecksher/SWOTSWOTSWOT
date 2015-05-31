@@ -151,6 +151,16 @@ public class GUI {
 		swot.addItem("W");
 		swot.addItem("O");
 		swot.addItem("T");
+		swot.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					addAction();
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {}
+			@Override
+			public void keyTyped(KeyEvent arg0) {}
+		});
 		frame.add(swot);
 		
 		dim(.02,.84,.09,.05);
@@ -163,6 +173,16 @@ public class GUI {
 		value.setBounds(x, y, w, h);
 		value.setHorizontalAlignment(JTextField.CENTER);
 		value.setFont(new Font(value.getName(), Font.PLAIN, fontSize(value, value.getText())));
+		value.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					addAction();
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {}
+			@Override
+			public void keyTyped(KeyEvent arg0) {}
+		});
 		frame.add(value);
 		
 		dim(.02, .93, .18, .05);
