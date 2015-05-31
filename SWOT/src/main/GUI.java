@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI {
 
@@ -24,11 +26,10 @@ public class GUI {
 	private JTextArea oper;
 	private JTextArea threat;
 	private JTextArea desc;
+	private JTextArea value;
 	private JButton add;
 	private JButton go;
-	private JComboBox swot;
-	
-	Font font = new Font("Verdana", Font.PLAIN, 13);
+	private JComboBox<String> swot;
 	
 	/**
 	 * Launch the application.
@@ -64,7 +65,6 @@ public class GUI {
 		
 		frame = new JFrame();
 		frame.setBounds(0, 0, width, height);
-		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -74,6 +74,10 @@ public class GUI {
 		h = (int)(height * .1);
 		
 		frame.add(createLabel("SWOT", x, y, w, h));
+		
+		y = (int)(height * .76);
+		
+		frame.add(createLabel("Input", x, y, w, h));
 		
 		x = (int)(width * .02);
 		y = (int)(height * .18);
@@ -89,7 +93,7 @@ public class GUI {
 		frame.add(addScroll(weak, x, y, w, h));
 		
 		x = (int)(width * .02);
-		y = (int)(height * .45);
+		y = (int)(height * .5);
 
 		oper = createTextArea(x, y, w, h);
 		frame.add(addScroll(oper, x, y, w, h));
@@ -99,10 +103,74 @@ public class GUI {
 		threat = createTextArea(x, y, w, h);
 		frame.add(addScroll(threat, x, y, w, h));
 		
-		stre.setFont(font);
-		oper.setFont(font);
-		weak.setFont(font);
-		threat.setFont(font);
+		x = (int)(width * .02);
+		y = (int)(height * .13);
+		w = (int)(width * .45);
+		h = (int)(height * .05); 
+		
+		frame.add(createLabel("Stengths", x, y, w, h));
+		
+		x = (int)(width * .49);
+		
+		frame.add(createLabel("Weaknesses", x, y, w, h));
+		
+		x = (int)(width * .02);
+		y = (int)(height * .45);
+		
+		frame.add(createLabel("Opportunities", x, y, w, h));
+		
+		x = (int)(width * .49);
+		
+		frame.add(createLabel("Threats", x, y, w, h));
+		
+		x = (int)(width * .02);
+		y = (int)(height * .87);
+		w = (int)(width * .09);
+		h = (int)(height * .05);
+				
+		swot = new JComboBox<String>();
+		swot.setBounds(x, y, w, h);
+		swot.addItem("S");
+		swot.addItem("W");
+		swot.addItem("O");
+		swot.addItem("T");
+		frame.add(swot);
+		
+		x = (int)(width * .12);
+		w = (int)(width * .18);
+		
+		frame.add(createLabel("Description", x, y, w, h));
+		
+		x = (int)(width * .3);
+		w = (int)(width * .76);
+		h = (int)(height * .15);
+		
+		desc = createTextArea(x, y, w, h);
+		frame.add(addScroll(desc, x, y, w, h));
+		
+		x = (int)(width * .89);
+		w = (int)(width * .09);
+		h = (int)(height * .05);
+		
+		value = createTextArea(x, y, w, h);
+		frame.add(value);
+		
+		x = (int)(width * .02);
+		y = (int)(height * .88);
+		
+		
+		add = new JButton("Add");
+        add.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                }
+            });
+        add.setBounds(x, y, w, h);
+        add.setBackground(Color.ORANGE);
+        add.setForeground(Color.BLUE);
+        frame.add(add);
+		
 		
 	}
 	
@@ -111,6 +179,7 @@ public class GUI {
 		text.setBackground(Color.CYAN);
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
+        text.setFont(new Font("Verdana", Font.PLAIN, 13));
 		
         return text;
 	}
