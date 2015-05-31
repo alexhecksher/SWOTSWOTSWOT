@@ -12,6 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -206,7 +210,24 @@ public class GUI {
                 public void actionPerformed(ActionEvent e)
                 {
                 	Logic result = new Logic(ideas);
-                	JOptionPane.showMessageDialog(frame, result.getResults());
+                	//JOptionPane.showMessageDialog(frame, result.getResults());
+                	JFrame resultFr = new JFrame("Results");
+            		resultFr.setBounds(width, height / 2, width / 2, height / 3);
+            		resultFr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            		resultFr.getContentPane().setLayout(null);
+            		
+            		resultFr.setVisible(true);
+            		int rWidth = resultFr.getContentPane().getWidth();
+            		int rHeight = resultFr.getContentPane().getHeight();
+            		
+            		JTextArea resultText = createTextArea(0, 0, rWidth, rHeight);
+            		resultText.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+            		resultText.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+            		resultText.setCaretPosition((int)JTextArea.CENTER_ALIGNMENT);
+            		resultText.setText(result.getResults());
+            		resultFr.add(addScroll(resultText, 0, 0, rWidth, rHeight));
+            		
+            		resultFr.setVisible(true);
                 }
             });
         go.setBounds(x, y, w, h);
