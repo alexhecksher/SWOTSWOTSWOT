@@ -31,6 +31,8 @@ public class GUI {
 	private JButton go;
 	private JComboBox<String> swot;
 	
+	private int x,y,w,h;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -58,20 +60,17 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		int x = 0;
-		int y = 0;
-		int w = 0;
-		int h = 0;
+		x = 0;
+		y = 0;
+		w = 0;
+		h = 0;
 		
 		frame = new JFrame();
 		frame.setBounds(0, 0, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		x = (int)(width * .33);
-		y = (int)(height * .02);
-		w = x;
-		h = (int)(height * .1);
+		dim(.33,.02,.33,.1);
 		
 		frame.add(createLabel("SWOT", x, y, w, h));
 		
@@ -79,10 +78,7 @@ public class GUI {
 		
 		frame.add(createLabel("Input", x, y, w, h));
 		
-		x = (int)(width * .02);
-		y = (int)(height * .18);
-		w = (int)(width * .45);
-		h = (int)(height * .25);
+		dim(.02,.18,.45,.25);
 		
 		stre = createTextArea(x, y, w, h);
 		frame.add(addScroll(stre, x, y, w, h));
@@ -103,10 +99,7 @@ public class GUI {
 		threat = createTextArea(x, y, w, h);
 		frame.add(addScroll(threat, x, y, w, h));
 		
-		x = (int)(width * .02);
-		y = (int)(height * .13);
-		w = (int)(width * .45);
-		h = (int)(height * .05); 
+		dim(.02,.13,.45,.05);
 		
 		frame.add(createLabel("Stengths", x, y, w, h));
 		
@@ -123,10 +116,7 @@ public class GUI {
 		
 		frame.add(createLabel("Threats", x, y, w, h));
 		
-		x = (int)(width * .02);
-		y = (int)(height * .87);
-		w = (int)(width * .09);
-		h = (int)(height * .05);
+		dim(.02,.87,.09,.05);
 				
 		swot = new JComboBox<String>();
 		swot.setBounds(x, y, w, h);
@@ -141,16 +131,12 @@ public class GUI {
 		
 		frame.add(createLabel("Description", x, y, w, h));
 		
-		x = (int)(width * .3);
-		w = (int)(width * .76);
-		h = (int)(height * .15);
+		dim(.3,.87,.76,.15);
 		
 		desc = createTextArea(x, y, w, h);
 		frame.add(addScroll(desc, x, y, w, h));
 		
-		x = (int)(width * .89);
-		w = (int)(width * .09);
-		h = (int)(height * .05);
+		dim(.89,.87,.09,.05);
 		
 		value = createTextArea(x, y, w, h);
 		frame.add(value);
@@ -215,6 +201,13 @@ public class GUI {
 		int fontSize = Math.min(newFontSize, componentHeight);
 
 		return fontSize;
+	}
+	
+	private void dim(double xVal, double d, double e, double f) {
+		x = (int)(width*xVal);
+		y = (int)(height*d);
+		w = (int)(width*e);
+		h = (int)(height*f);
 	}
 
 }
