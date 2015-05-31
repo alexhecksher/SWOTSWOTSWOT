@@ -9,12 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GUI {
 
@@ -32,6 +34,7 @@ public class GUI {
 	private JComboBox<String> swot;
 	
 	private int x,y,w,h;
+	private ArrayList<Idea> ideas = new ArrayList<Idea>();
 	
 	/**
 	 * Launch the application.
@@ -131,18 +134,18 @@ public class GUI {
 		
 		frame.add(createLabel("Description", x, y, w, h));
 		
-		dim(.3,.87,.76,.15);
+		dim(.3,.87,.54,.15);
 		
 		desc = createTextArea(x, y, w, h);
 		frame.add(addScroll(desc, x, y, w, h));
 		
-		dim(.89,.87,.09,.05);
+		dim(.85,.87,.09,.05);
 		
 		value = createTextArea(x, y, w, h);
 		frame.add(value);
 		
 		x = (int)(width * .02);
-		y = (int)(height * .88);
+		y = (int)(height * .93);
 		
 		
 		add = new JButton("Add");
@@ -150,6 +153,10 @@ public class GUI {
             {
                 public void actionPerformed(ActionEvent e)
                 {
+                	Idea temp = new Idea((String)swot.getSelectedItem(), desc.getText(), toNum(value.getText()));
+                	ideas.add(temp);
+                	desc.setText("");
+                	value.setText("");
                 }
             });
         add.setBounds(x, y, w, h);
@@ -157,11 +164,26 @@ public class GUI {
         add.setForeground(Color.BLUE);
         frame.add(add);
 		
-		
+        y = height;
+        
+        go = new JButton("Go");
+        go.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                	Logic result = new Logic(ideas);
+                	JOptionPane.showMessageDialog(frame, result.getResults());
+                }
+            });
+        go.setBounds(x, y, w, h);
+        go.setBackground(Color.ORANGE);
+        go.setForeground(Color.BLUE);
+        frame.add(go);
 	}
 	
-	public JTextArea createTextArea(int x, int y, int w, int h) {
+	private JTextArea createTextArea(int x, int y, int w, int h) {
 		JTextArea text = new JTextArea();
+		text.setBounds(x, y, w, h);
 		text.setBackground(Color.CYAN);
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
@@ -170,7 +192,7 @@ public class GUI {
         return text;
 	}
 	
-	public JLabel createLabel(String text, int x, int y, int w, int h) {
+	private JLabel createLabel(String text, int x, int y, int w, int h) {
 		JLabel label = new JLabel(text);
 		label.setBounds(x, y, w, h);
 		label.setFont(new Font(label.getName(), Font.BOLD, fontSize(label, label.getText())));
@@ -178,14 +200,14 @@ public class GUI {
 		return label;
 	}
 	
-	public JScrollPane addScroll(JTextArea text, int x, int y, int w, int h) {
+	private JScrollPane addScroll(JTextArea text, int x, int y, int w, int h) {
 		JScrollPane scroll = new JScrollPane(text);
 		scroll.setBounds(x, y, w, h);
 		
 		return scroll;
 	}
 	
-	public int fontSize(Component comp, String text) {
+	private int fontSize(Component comp, String text) {
 		Font textFont = comp.getFont();
 		
 		int stringWidth = comp.getFontMetrics(textFont).stringWidth(text);
@@ -201,6 +223,16 @@ public class GUI {
 		int fontSize = Math.min(newFontSize, componentHeight);
 
 		return fontSize;
+	}
+	
+	private int toNum(String str) {
+		int num = 0;
+        for(int i = 0; i < str.length(); i++)
+        {
+            num = num + (str.charAt(i) - 48);
+            num *= 10;
+        }
+        return num / 10;
 	}
 	
 	private void dim(double xVal, double d, double e, double f) {
