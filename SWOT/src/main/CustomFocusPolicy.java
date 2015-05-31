@@ -19,7 +19,6 @@ public class CustomFocusPolicy extends FocusTraversalPolicy {
 		int index = components.indexOf(aComponent);
 		if (index==components.size()-1) index = 0;
 		else index++;
-		System.out.println(index);
 		return components.get(index);
 	}
 
@@ -27,16 +26,8 @@ public class CustomFocusPolicy extends FocusTraversalPolicy {
 	public Component getComponentBefore(Container aContainer,
 			Component aComponent) {
 		int index = components.indexOf(aComponent);
-		index-=2;
-		if (index<0) {
-			if (index%2==0) {
-				if (components.size()%2==0) index = components.size()-1;
-				else index=components.size()-2;
-			} else {
-				if (components.size()%2==0) index = components.size()-2;
-				else index=components.size()-1;
-			}
-		}
+		if (index==0) index=components.size()-1;
+		else index--;
 		return components.get(index);
 	}
 
