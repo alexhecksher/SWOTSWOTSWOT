@@ -1,11 +1,7 @@
 package main;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Event;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.FocusTraversalPolicy;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -13,13 +9,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -52,6 +45,7 @@ public class GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					@SuppressWarnings("unused")
 					GUI window = new GUI();
 					//window.frame.setVisible(true);
 				} catch (Exception e) {
