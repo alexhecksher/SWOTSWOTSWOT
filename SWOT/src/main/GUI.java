@@ -19,11 +19,10 @@ public class GUI {
 	private final int width = 1000;
 	private final int height = 1000;
 	private JFrame frame;
-	private JLabel swotLabel;
-	private JLabel sLabel;
-	private JLabel wLabel;
-	private JLabel oLabel;
-	private JLabel tLabel;
+	private JTextArea stre;
+	private JTextArea weak;
+	private JTextArea oper;
+	private JTextArea threat;
 	private JTextArea desc;
 	private JButton add;
 	private JButton go;
@@ -62,7 +61,8 @@ public class GUI {
 		int h = 0;
 		
 		frame = new JFrame();
-		frame.setSize(width, height);
+		frame.setBounds(0, 0, width, height);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -71,38 +71,52 @@ public class GUI {
 		w = x;
 		h = (int)(height * .1);
 		
-		swotLabel = new JLabel("SWOT");
-		swotLabel.setBounds(x, y, w, h);
-		swotLabel.setFont(new Font(swotLabel.getName(), Font.BOLD, fontSize(swotLabel, swotLabel.getText())));
-		frame.add(swotLabel);
+		frame.add(createLabel("SWOT", x, y, w, h));
 		
 		x = (int)(width * .02);
-		y = (int)(height * .13);
+		y = (int)(height * .18);
 		w = (int)(width * .45);
-		h = (int)(height * .3);
+		h = (int)(height * .25);
 		
-		frame.add(createTextArea(x, y, w, h));
+		stre = createTextArea(x, y, w, h);
+		frame.add(addScroll(stre, x, y, w, h));
 		
 		x = (int)(width * .49);
 		
-		frame.add(createTextArea(x, y, w, h));
+		weak = createTextArea(x, y, w, h);
+		frame.add(addScroll(weak, x, y, w, h));
 		
 		x = (int)(width * .02);
 		y = (int)(height * .45);
-		
-		frame.add(createTextArea(x, y, w, h));
+
+		oper = createTextArea(x, y, w, h);
+		frame.add(addScroll(oper, x, y, w, h));
 		
 		x = (int)(width * .49);
 		
-		frame.add(createTextArea(x, y, w, h));
-			
+		threat = createTextArea(x, y, w, h);
+		frame.add(addScroll(threat, x, y, w, h));
+		
 	}
 	
-	public JScrollPane createTextArea(int x, int y, int w, int h) {
+	public JTextArea createTextArea(int x, int y, int w, int h) {
 		JTextArea text = new JTextArea();
 		text.setBackground(Color.CYAN);
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
+		
+        return text;
+	}
+	
+	public JLabel createLabel(String text, int x, int y, int w, int h) {
+		JLabel label = new JLabel(text);
+		label.setBounds(x, y, w, h);
+		label.setFont(new Font(label.getName(), Font.BOLD, fontSize(label, label.getText())));
+		
+		return label;
+	}
+	
+	public JScrollPane addScroll(JTextArea text, int x, int y, int w, int h) {
 		JScrollPane scroll = new JScrollPane(text);
 		scroll.setBounds(x, y, w, h);
 		
@@ -112,8 +126,8 @@ public class GUI {
 	public int fontSize(Component comp, String text) {
 		Font textFont = comp.getFont();
 		
-		int stringWidth = swotLabel.getFontMetrics(textFont).stringWidth(text);
-		int componentWidth = swotLabel.getWidth();
+		int stringWidth = comp.getFontMetrics(textFont).stringWidth(text);
+		int componentWidth = comp.getWidth();
 
 		// Find out how much the font can grow in width.
 		double widthRatio = (double)componentWidth / (double)stringWidth;
