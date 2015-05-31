@@ -19,14 +19,9 @@ public class GUI {
 	private final int width = 1000;
 	private final int height = 1000;
 	private JFrame frame;
-	private JLabel swotLabel;
-	private JLabel sLabel;
-	private JLabel wLabel;
-	private JLabel oLabel;
-	private JLabel tLabel;
+	private JLabel swotLabel, sLabel, wLabel, oLabel, tLabel;
 	private JTextArea desc;
-	private JButton add;
-	private JButton go;
+	private JButton add, go;
 	private JComboBox swot;
 
 	/**
@@ -56,10 +51,7 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		int x = 0;
-		int y = 0;
-		int w = 0;
-		int h = 0;
+		int x = 0, y = 0, h = 0, w = 0;
 		
 		frame = new JFrame();
 		frame.setSize(width, height);
