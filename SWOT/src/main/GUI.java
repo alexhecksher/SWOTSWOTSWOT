@@ -35,6 +35,8 @@ public class GUI {
 	private JButton go;
 	private JComboBox<String> swot;
 	
+	private final Font defFont = new Font("Verdana", Font.PLAIN, 22);
+	
 	private int x,y,w,h;
 	private ArrayList<Idea> ideas = new ArrayList<Idea>();
 	
@@ -138,6 +140,7 @@ public class GUI {
 			@Override
 			public void keyTyped(KeyEvent arg0) {}
 		});
+		desc.setFont(defFont);
 		frame.add(desc);
 		
 		dim(.02,.78,.09,.05);
@@ -205,7 +208,7 @@ public class GUI {
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
         text.setEditable(false);
-        text.setFont(new Font("Verdana", Font.PLAIN, 22));
+        text.setFont(defFont);
         //text.setForeground(Color.ORANGE);
 		
         return text;
