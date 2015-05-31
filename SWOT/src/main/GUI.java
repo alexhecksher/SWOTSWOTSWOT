@@ -2,8 +2,10 @@ package main;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Event;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.FocusTraversalPolicy;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -20,7 +22,10 @@ import javax.swing.border.LineBorder;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class GUI {
 
@@ -152,6 +157,16 @@ public class GUI {
 		value.setBounds(x, y, w, h);
 		value.setHorizontalAlignment(JTextField.CENTER);
 		value.setFont(new Font(value.getName(), Font.PLAIN, fontSize(value, value.getText())));
+		value.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					addAction();
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {}
+			@Override
+			public void keyTyped(KeyEvent arg0) {}
+		});
 		frame.add(value);
 		
 		dim(.02, .93, .18, .05);
@@ -161,28 +176,7 @@ public class GUI {
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                	String descStr = desc.getText();
-                	int val = toNum(value.getText());
-                	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val != -1) {
-	                	String swotVal = (String)swot.getSelectedItem();
-	                	Idea tempIdea = new Idea(swotVal, descStr, val);
-	                	ideas.add(tempIdea);
-	                	desc.setText("");
-	                	value.setText("");
-	                	descStr += "\t\t";
-	                	if(swotVal.equals("S")) {
-	                		stre.setText(stre.getText() + descStr);
-	                	}
-	                	else if(swotVal.equals("W")) {
-	                		weak.setText(weak.getText() + descStr);
-	                	}
-	                	else if(swotVal.equals("O")) {
-	                		oppo.setText(oppo.getText() + descStr);
-	                	}
-	                	else {
-	                		threat.setText(threat.getText() + descStr);
-	                	}
-                	}
+                	addAction();
                 }
             });
         add.setBounds(x, y, w, h);
@@ -201,6 +195,12 @@ public class GUI {
             });
         go.setBounds(x, y, w, h);
         frame.add(go);
+        
+        Vector<Component> order = new Vector<Component>(3);
+        order.add(swot);
+        order.add(desc);
+        order.add(value);//        frame.setFocusTraversalPolicy(policy);
+        
 	}
 	
 	private JTextArea createTextArea(int x, int y, int w, int h) {
@@ -268,5 +268,31 @@ public class GUI {
 		w = (int)(width*e);
 		h = (int)(height*f);
 	}
+	
+	public void addAction() {
+    	String descStr = desc.getText();
+    	int val = toNum(value.getText());
+    	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val != -1) {
+        	String swotVal = (String)swot.getSelectedItem();
+        	Idea tempIdea = new Idea(swotVal, descStr, val);
+        	ideas.add(tempIdea);
+        	desc.setText("");
+        	value.setText("");
+        	descStr += "\t\t";
+        	if(swotVal.equals("S")) {
+        		stre.setText(stre.getText() + descStr);
+        	}
+        	else if(swotVal.equals("W")) {
+        		weak.setText(weak.getText() + descStr);
+        	}
+        	else if(swotVal.equals("O")) {
+        		oppo.setText(oppo.getText() + descStr);
+        	}
+        	else {
+        		threat.setText(threat.getText() + descStr);
+        	}
+    	}
+    }
+	
 
 }
