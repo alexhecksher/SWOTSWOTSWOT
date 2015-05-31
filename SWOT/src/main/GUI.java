@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -10,8 +11,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -20,15 +24,15 @@ import java.util.ArrayList;
 
 public class GUI {
 
-	private final int width = 1000;
-	private final int height = 1000;
+	private int width = 1000;
+	private int height = 1000;
 	private JFrame frame;
 	private JTextArea stre;
 	private JTextArea weak;
-	private JTextArea oper;
+	private JTextArea oppo;
 	private JTextArea threat;
 	private JTextArea desc;
-	private JTextArea value;
+	private JTextField value;
 	private JButton add;
 	private JButton go;
 	private JComboBox<String> swot;
@@ -68,54 +72,56 @@ public class GUI {
 		w = 0;
 		h = 0;
 		
-		frame = new JFrame();
+		frame = new JFrame("SWOT");
 		frame.setBounds(0, 0, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		dim(.33,.02,.33,.1);
+		frame.setVisible(true);
+		width = frame.getContentPane().getWidth();
+		height = frame.getContentPane().getHeight();
 		
-		frame.add(createLabel("SWOT", x, y, w, h));
+		dim(.02, .78, .33, .05);
 		
-		y = (int)(height * .76);
+		JLabel input = createLabel("Input:", x, y, w, h);
+		input.setHorizontalAlignment(JLabel.LEFT);
+		frame.add(input);
 		
-		frame.add(createLabel("Input", x, y, w, h));
-		
-		dim(.02,.18,.45,.25);
+		dim(.02,.07,.47,.24);
 		
 		stre = createTextArea(x, y, w, h);
 		frame.add(addScroll(stre, x, y, w, h));
 		
-		x = (int)(width * .49);
+		x = (int)(width * .51);
 		
 		weak = createTextArea(x, y, w, h);
 		frame.add(addScroll(weak, x, y, w, h));
 		
 		x = (int)(width * .02);
-		y = (int)(height * .5);
+		y = (int)(height * .38);
 
-		oper = createTextArea(x, y, w, h);
-		frame.add(addScroll(oper, x, y, w, h));
+		oppo = createTextArea(x, y, w, h);
+		frame.add(addScroll(oppo, x, y, w, h));
 		
-		x = (int)(width * .49);
+		x = (int)(width * .51);
 		
 		threat = createTextArea(x, y, w, h);
 		frame.add(addScroll(threat, x, y, w, h));
 		
-		dim(.02,.13,.45,.05);
+		dim(.02,.02,.47,.05);
 		
 		frame.add(createLabel("Stengths", x, y, w, h));
 		
-		x = (int)(width * .49);
+		x = (int)(width * .51);
 		
 		frame.add(createLabel("Weaknesses", x, y, w, h));
 		
 		x = (int)(width * .02);
-		y = (int)(height * .45);
+		y = (int)(height * .33);
 		
 		frame.add(createLabel("Opportunities", x, y, w, h));
 		
-		x = (int)(width * .49);
+		x = (int)(width * .51);
 		
 		frame.add(createLabel("Threats", x, y, w, h));
 		
@@ -137,31 +143,49 @@ public class GUI {
 		dim(.3,.87,.54,.15);
 		
 		desc = createTextArea(x, y, w, h);
+		desc.setEditable(true);
 		frame.add(addScroll(desc, x, y, w, h));
 		
-		dim(.85,.87,.09,.05);
+		dim(.85,.87,.05,.05);
 		
-		value = createTextArea(x, y, w, h);
+		value = new JTextField();
+		value.setBounds(x, y, w, h);
+		value.setHorizontalAlignment(JTextField.CENTER);
+		value.setFont(new Font(value.getName(), Font.PLAIN, fontSize(value, value.getText())));
 		frame.add(value);
 		
-		x = (int)(width * .02);
-		y = (int)(height * .93);
-		
+		dim(.02, .93, .18, .05);
 		
 		add = new JButton("Add");
         add.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                	Idea temp = new Idea((String)swot.getSelectedItem(), desc.getText(), toNum(value.getText()));
-                	ideas.add(temp);
-                	desc.setText("");
-                	value.setText("");
+                	String descStr = desc.getText();
+                	int val = toNum(value.getText());
+                	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val != -1) {
+	                	String swotVal = (String)swot.getSelectedItem();
+	                	Idea tempIdea = new Idea(swotVal, descStr, val);
+	                	ideas.add(tempIdea);
+	                	desc.setText("");
+	                	value.setText("");
+	                	descStr += "\t\t";
+	                	if(swotVal.equals("S")) {
+	                		stre.setText(stre.getText() + descStr);
+	                	}
+	                	else if(swotVal.equals("W")) {
+	                		weak.setText(weak.getText() + descStr);
+	                	}
+	                	else if(swotVal.equals("O")) {
+	                		oppo.setText(oppo.getText() + descStr);
+	                	}
+	                	else {
+	                		threat.setText(threat.getText() + descStr);
+	                	}
+                	}
                 }
             });
         add.setBounds(x, y, w, h);
-        add.setBackground(Color.ORANGE);
-        add.setForeground(Color.BLUE);
         frame.add(add);
 		
         y = height;
@@ -176,18 +200,18 @@ public class GUI {
                 }
             });
         go.setBounds(x, y, w, h);
-        go.setBackground(Color.ORANGE);
-        go.setForeground(Color.BLUE);
         frame.add(go);
 	}
 	
 	private JTextArea createTextArea(int x, int y, int w, int h) {
 		JTextArea text = new JTextArea();
 		text.setBounds(x, y, w, h);
-		text.setBackground(Color.CYAN);
+		//text.setBackground(Color.CYAN);
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
-        text.setFont(new Font("Verdana", Font.PLAIN, 13));
+        text.setEditable(false);
+        text.setFont(new Font("Verdana", Font.PLAIN, 28));
+        //text.setForeground(Color.ORANGE);
 		
         return text;
 	}
@@ -195,7 +219,8 @@ public class GUI {
 	private JLabel createLabel(String text, int x, int y, int w, int h) {
 		JLabel label = new JLabel(text);
 		label.setBounds(x, y, w, h);
-		label.setFont(new Font(label.getName(), Font.BOLD, fontSize(label, label.getText())));
+		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setFont(new Font(label.getName(), Font.PLAIN, fontSize(label, label.getText())));
 		
 		return label;
 	}
@@ -229,7 +254,9 @@ public class GUI {
 		int num = 0;
         for(int i = 0; i < str.length(); i++)
         {
-            num = num + (str.charAt(i) - 48);
+        	char temp = str.charAt(i);
+        	if(Character.isLetter(temp)) return -1;
+            num = num + (temp - 48);
             num *= 10;
         }
         return num / 10;
