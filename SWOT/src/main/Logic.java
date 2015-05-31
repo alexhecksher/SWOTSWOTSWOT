@@ -30,8 +30,8 @@ public class Logic {
 			if (ideaTemp.SWOTc=="T")
 				tTotal+=ideaTemp.value;
 		}
-		immediate = sTotal-wTotal; //really more like the concrete score
-		future = oTotal-tTotal; //really more like the possibility score
+		immediate = sTotal-wTotal; //really more like the internal score
+		future = oTotal-tTotal; //really more like the external score
 		composite = immediate+future;
 		
 		//Add phrase 1 based on overall composite score i.e. is the idea good as a whole?
@@ -53,18 +53,18 @@ public class Logic {
 		
 		//Add phrase 3 based on whether they are both positive, both negative, or one pos and one neg
 		if (bothNegative) {
-			results += " Both in the concrete and possible quantifications of this concept, its prospects don't look good, ";
+			results += " Both in the internal and external quantifications of this concept, its prospects don't look good, ";
 		}
 		if (bothPositive && !(immediate==0&&future==0)) {
-			results += " Both in the concrete and possible quantifications of this concept, its prospects look good, ";
+			results += " Both in the internal and external quantifications of this concept, its prospects look good, ";
 		}
 		if (different && immediate>future) {
-			results += " Concretely, this concept is a good idea, however the threats are greater than the opportunities, with the concept ";
+			results += " internally, this concept is a good idea, however the threats are greater than the opportunities, with the concept ";
 		}
 		if (different && immediate<future) {
 			results += " Possibility-wise, this concept is a good idea, however the weaknesses are greater than the strengths, with the concept ";
 		}
-		results += "earning a concrete score of "+immediate+" and a possibility score of "+future+".";
+		results += "earning an internal score of "+immediate+" and an external score of "+future+".";
 		
 	}
 	
