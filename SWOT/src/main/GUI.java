@@ -53,7 +53,7 @@ public class GUI {
 			public void run() {
 				try {
 					GUI window = new GUI();
-					window.frame.setVisible(true);
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -71,12 +71,7 @@ public class GUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		x = 0;
-		y = 0;
-		w = 0;
-		h = 0;
-		
+	private void initialize() {	
 		frame = new JFrame("SWOT");
 		frame.setBounds(0, 0, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,25 +81,19 @@ public class GUI {
 		width = frame.getContentPane().getWidth();
 		height = frame.getContentPane().getHeight();
 		
-		dim(.02, .78, .33, .05);
-		
-		JLabel input = createLabel("Input:", x, y, w, h);
-		input.setHorizontalAlignment(JLabel.LEFT);
-		frame.add(input);
-		
-		dim(.02,.07,.47,.24);
+		dim(.02,.07,.47,.29);
 		
 		stre = createTextArea(x, y, w, h);
 		frame.add(addScroll(stre, x, y, w, h));
 		
-		x = (int)(width * .51);
+		x = (int)(width * .51);	
 		
 		weak = createTextArea(x, y, w, h);
 		frame.add(addScroll(weak, x, y, w, h));
 		
 		x = (int)(width * .02);
-		y = (int)(height * .38);
-
+		y = (int)(height * .43);
+		
 		oppo = createTextArea(x, y, w, h);
 		frame.add(addScroll(oppo, x, y, w, h));
 		
@@ -122,7 +111,7 @@ public class GUI {
 		frame.add(createLabel("Weaknesses", x, y, w, h));
 		
 		x = (int)(width * .02);
-		y = (int)(height * .33);
+		y = (int)(height * .38);
 		
 		frame.add(createLabel("Opportunities", x, y, w, h));
 		
@@ -130,8 +119,20 @@ public class GUI {
 		
 		frame.add(createLabel("Threats", x, y, w, h));
 		
-		dim(.02,.87,.09,.05);
+		dim(.02,.74,.81,.04);
+		
+		JLabel descLb = createLabel("Description", x, y, w, h);
+		descLb.setHorizontalAlignment(JLabel.LEFT);
+		frame.add(descLb);
 				
+		dim(.02,.78,.81,.11);
+		
+		desc = createTextArea(x, y, w, h);
+		desc.setEditable(true);
+		frame.add(addScroll(desc, x, y, w, h));
+		
+		dim(.84,.78,.09,.05);
+		
 		swot = new JComboBox<String>();
 		swot.setBounds(x, y, w, h);
 		swot.addItem("S");
@@ -140,18 +141,11 @@ public class GUI {
 		swot.addItem("T");
 		frame.add(swot);
 		
-		x = (int)(width * .12);
-		w = (int)(width * .18);
+		dim(.84,.84,.09,.05);
 		
-		frame.add(createLabel("Description", x, y, w, h));
+		frame.add(createLabel("Value", x, y, w, h));
 		
-		dim(.3,.87,.54,.15);
-		
-		desc = createTextArea(x, y, w, h);
-		desc.setEditable(true);
-		frame.add(addScroll(desc, x, y, w, h));
-		
-		dim(.85,.87,.05,.05);
+		dim(.93,.84,.05,.05);
 		
 		value = new JTextField();
 		value.setBounds(x, y, w, h);
@@ -182,7 +176,7 @@ public class GUI {
         add.setBounds(x, y, w, h);
         frame.add(add);
 		
-        y = height;
+        x = (int)(width * .63);
         
         go = new JButton("Go");
         go.addActionListener(new ActionListener()
