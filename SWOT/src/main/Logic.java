@@ -62,7 +62,7 @@ public class Logic {
 			results += " Concretely, this concept is a good idea, however the threats are greater than the opportunities, with the concept ";
 		}
 		if (different && immediate<future) {
-			results += " Concretely, this concept is a good idea, however the threats are greater than the opportunities, with the concept ";
+			results += " Possibility-wise, this concept is a good idea, however the weaknesses are greater than the strengths, with the concept ";
 		}
 		results += "earning a concrete score of "+immediate+" and a possibility score of "+future+".";
 		
