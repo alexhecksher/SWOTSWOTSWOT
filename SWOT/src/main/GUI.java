@@ -12,31 +12,44 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
 public class GUI {
-
 	private int width = 1000;
 	private int height = 1000;
+	
 	private JFrame frame;
+	
 	private JTextArea stre;
 	private JTextArea weak;
 	private JTextArea oppo;
 	private JTextArea threat;
 	private JTextField desc;
 	private JTextField value;
+	
+	private JLabel streL;
+	private JLabel weakL;
+	private JLabel oppoL;
+	private JLabel threatL;
+	private JLabel descL;
+	private JLabel valueL;
+	
+	private JScrollPane streS;
+	private JScrollPane weakS;
+	private JScrollPane oppoS;
+	private JScrollPane threatS;
+	
 	private JButton add;
 	private JButton go;
+	
 	private JComboBox<String> swot;
 	
 	private final Font defFont = new Font("Verdana", Font.PLAIN, 22);
@@ -53,9 +66,12 @@ public class GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					@SuppressWarnings("unused")
 					GUI window = new GUI();
-					//window.frame.setVisible(true);
+					window.getFrame().addComponentListener(new ComponentAdapter() {
+			            public void componentResized(ComponentEvent e) {
+			                window.update();
+			            }
+			        });
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -68,68 +84,101 @@ public class GUI {
 	 */
 	public GUI() {
 		initialize();
+		update();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {	
+	public void initialize() {
 		frame = new JFrame("SWOT");
-		frame.setBounds(0, 0, width, height);
+		frame.setBounds(100, 100, width, height);
+		
+		stre = new JTextArea();
+		weak = new JTextArea();
+		oppo = new JTextArea();
+		threat = new JTextArea();
+		
+		streL = new JLabel("Strength");
+		weakL = new JLabel("Weak");
+		oppoL = new JLabel("Opportunity");
+		threatL = new JLabel("Threat");
+		
+		descL = new JLabel();
+		desc = new JTextField();
+		
+		swot = new JComboBox<String>();
+		swot.addItem("S");
+		swot.addItem("W");
+		swot.addItem("O");
+		swot.addItem("T");
+		
+		valueL = new JLabel("Value");
+		value = new JTextField();
+		
+		add = new JButton("Add");
+		
+		go = new JButton("Go");
+	}
+	
+	public void update() {		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
 		frame.setVisible(true);
+		
 		width = frame.getContentPane().getWidth();
 		height = frame.getContentPane().getHeight();
 		
 		dim(.02,.07,.47,.29);
 		
-		stre = createTextArea(x, y, w, h);
-		frame.add(addScroll(stre, x, y, w, h));
+		createTextArea(stre, x, y, w, h);
+		frame.add(stre);
 		
-		x = (int)(width * .51);	
+		x = (int)(width * .51);
 		
-		weak = createTextArea(x, y, w, h);
-		frame.add(addScroll(weak, x, y, w, h));
+		createTextArea(weak, x, y, w, h);
+		frame.add(weak);
 		
 		x = (int)(width * .02);
 		y = (int)(height * .43);
 		
-		oppo = createTextArea(x, y, w, h);
-		frame.add(addScroll(oppo, x, y, w, h));
+		createTextArea(oppo, x, y, w, h);
+		frame.add(oppo);
 		
 		x = (int)(width * .51);
 		
-		threat = createTextArea(x, y, w, h);
-		frame.add(addScroll(threat, x, y, w, h));
+		createTextArea(threat, x, y, w, h);
+		frame.add(threat);
 		
 		dim(.02,.02,.47,.05);
 		
-		frame.add(createLabel("Stengths", x, y, w, h));
+		createLabel(streL, x, y, w, h);
+		frame.add(streL);
 		
 		x = (int)(width * .51);
 		
-		frame.add(createLabel("Weaknesses", x, y, w, h));
+		createLabel(weakL, x, y, w, h);
+		frame.add(weakL);
 		
 		x = (int)(width * .02);
 		y = (int)(height * .38);
 		
-		frame.add(createLabel("Opportunities", x, y, w, h));
+		createLabel(oppoL, x, y, w, h);
+		frame.add(oppoL);
 		
 		x = (int)(width * .51);
 		
-		frame.add(createLabel("Threats", x, y, w, h));
+		createLabel(threatL, x, y, w, h);
+		frame.add(threatL);
 		
 		dim(.17,.74,.81,.04);
 		
-		JLabel descLb = createLabel("Description", x, y, w, h);
-		descLb.setHorizontalAlignment(JLabel.LEFT);
-		frame.add(descLb);
+		createLabel(descL, x, y, w, h);
+		descL.setHorizontalAlignment(JLabel.LEFT);
+		frame.add(descL);
 				
 		dim(.17,.78,.81,.11);
 		
-		desc = new JTextField();
 		desc.setBounds(x, y, w, h);
 		desc.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
@@ -149,12 +198,8 @@ public class GUI {
 		
 		dim(.02,.78,.09,.05);
 		
-		swot = new JComboBox<String>();
 		swot.setBounds(x, y, w, h);
-		swot.addItem("S");
-		swot.addItem("W");
-		swot.addItem("O");
-		swot.addItem("T");
+		swot.setFont(defFont);
 		swot.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
@@ -169,11 +214,11 @@ public class GUI {
 		
 		dim(.02,.84,.09,.05);
 		
-		frame.add(createLabel("Value", x, y, w, h));
+		createLabel(valueL, x, y, w, h);
+		frame.add(valueL);
 		
 		dim(.11,.84,.05,.05);
 		
-		value = new JTextField();
 		value.setBounds(x, y, w, h);
 		value.setHorizontalAlignment(JTextField.CENTER);
 		value.setFont(new Font(value.getName(), Font.PLAIN, fontSize(value, value.getText())));
@@ -191,8 +236,8 @@ public class GUI {
 		
 		dim(.02, .93, .18, .05);
 		
-		add = new JButton("Add");
-        add.addActionListener(new ActionListener()
+        add.setFont(defFont);
+		add.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
                 {
@@ -204,7 +249,7 @@ public class GUI {
 		
         x = (int)(width * .63);
         
-        go = new JButton("Go");
+        go.setFont(defFont);
         go.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
@@ -212,7 +257,7 @@ public class GUI {
                 	Logic result = new Logic(ideas);
                 	//JOptionPane.showMessageDialog(frame, result.getResults());
                 	JFrame resultFr = new JFrame("Results");
-            		resultFr.setBounds(width, height / 2, width / 2, height / 3);
+            		resultFr.setBounds(width / 2, height / 2, width / 2, height / 3);
             		resultFr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             		resultFr.getContentPane().setLayout(null);
             		
@@ -220,13 +265,13 @@ public class GUI {
             		int rWidth = resultFr.getContentPane().getWidth();
             		int rHeight = resultFr.getContentPane().getHeight();
             		
-            		JTextArea resultText = createTextArea(0, 0, rWidth, rHeight);
+            		JTextArea resultText = new JTextArea();
+            		createTextArea(resultText, 0, 0, rWidth, rHeight);
             		resultText.setAlignmentY(JTextArea.CENTER_ALIGNMENT);
             		resultText.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
             		resultText.setCaretPosition((int)JTextArea.CENTER_ALIGNMENT);
             		resultText.setText(result.getResults());
-            		resultFr.add(addScroll(resultText, 0, 0, rWidth, rHeight));
-            		
+            		resultFr.add(resultText);
             		resultFr.setVisible(true);
                 }
             });
@@ -242,21 +287,15 @@ public class GUI {
         
 	}
 	
-	private JTextArea createTextArea(int x, int y, int w, int h) {
-		JTextArea text = new JTextArea();
+	private void createTextArea(JTextArea text, int x, int y, int w, int h) {
 		text.setBounds(x, y, w, h);
-		//text.setBackground(Color.CYAN);
 		text.setLineWrap(true);
         text.setWrapStyleWord(true);
         text.setEditable(false);
         text.setFont(defFont);
-        //text.setForeground(Color.ORANGE);
-		
-        return text;
 	}
 	
-	private JLabel createLabel(String text, int x, int y, int w, int h) {
-		JLabel label = new JLabel(text);
+	private JLabel createLabel(JLabel label, int x, int y, int w, int h) {
 		label.setBounds(x, y, w, h);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setFont(new Font(label.getName(), Font.PLAIN, fontSize(label, label.getText())));
@@ -264,12 +303,12 @@ public class GUI {
 		return label;
 	}
 	
-	private JScrollPane addScroll(JTextArea text, int x, int y, int w, int h) {
+	/*private JScrollPane addScroll(JTextArea text, int x, int y, int w, int h) {
 		JScrollPane scroll = new JScrollPane(text);
 		scroll.setBounds(x, y, w, h);
 		
 		return scroll;
-	}
+	}*/
 	
 	private int fontSize(Component comp, String text) {
 		Font textFont = comp.getFont();
@@ -310,25 +349,23 @@ public class GUI {
 	
 	public void addAction() {
     	String descStr = desc.getText();
-    	descStr.replaceAll("\n", "");
-    	descStr=descStr.trim();
+    	descStr = descStr.trim();
     	int val = toNum(value.getText());
-    	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val > -1) {
+    	if(swot.getSelectedItem() instanceof String && descStr.length() > 0 && val > 0) {
         	String swotVal = (String)swot.getSelectedItem();
         	Idea tempIdea = new Idea(swotVal, descStr, val);
         	ideas.add(tempIdea);
-        	descStr+="\n";
         	if(swotVal.equals("S")) {
-        		stre.setText(stre.getText() + descStr);
+        		stre.setText(stre.getText() + descStr + '\t');
         	}
         	else if(swotVal.equals("W")) {
-        		weak.setText(weak.getText() + descStr);
+        		weak.setText(weak.getText() + descStr + '\t');
         	}
         	else if(swotVal.equals("O")) {
-        		oppo.setText(oppo.getText() + descStr);
+        		oppo.setText(oppo.getText() + descStr +'\t');
         	}
         	else {
-        		threat.setText(threat.getText() + descStr);
+        		threat.setText(threat.getText() + descStr + '\t');
         	}
     	}
     	desc.setText("");
@@ -336,5 +373,7 @@ public class GUI {
     	swot.requestFocus();
 	}
 	
-
+	public JFrame getFrame() {
+		return frame;
+	}
 }
